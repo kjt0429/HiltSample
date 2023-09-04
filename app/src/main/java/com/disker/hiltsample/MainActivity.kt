@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -15,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.lang.reflect.Field
 import java.util.Objects
 import java.util.function.Consumer
+import javax.inject.Inject
 
 /**
  * Hilt 가 set-up(@HiltAndroidApp)되면, application-level component가 사용되고
@@ -35,34 +37,18 @@ import java.util.function.Consumer
  */
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject lateinit var analyticsAdapter: AnalyticsAdapter
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             HiltSampleTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    Greeting("Android")
+                Button(onClick = {
+                    analyticsAdapter.sendEvent()
+                }) {
+                    Text(text = "Send Event!")
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    HiltSampleTheme {
-        Greeting("Android")
     }
 }
