@@ -28,7 +28,6 @@ class AnalyticsServiceImpl @Inject constructor() : AnalyticsService {
 @Module
 @InstallIn(ActivityComponent::class)
 abstract class AnalyticsModule {
-
     @Binds
     abstract fun bindAnalyticsService(analyticsServiceImpl: AnalyticsServiceImpl):
             AnalyticsService

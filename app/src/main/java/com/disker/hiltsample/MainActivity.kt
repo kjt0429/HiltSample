@@ -3,6 +3,7 @@ package com.disker.hiltsample
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
@@ -38,16 +39,25 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     @Inject lateinit var analyticsAdapter: AnalyticsAdapter
+    @Inject lateinit var promotionAdapter: PromotionAdapter
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             HiltSampleTheme {
-                Button(onClick = {
-                    analyticsAdapter.sendEvent()
-                }) {
-                    Text(text = "Send Event!")
+                Column() {
+                    Button(onClick = {
+                        analyticsAdapter.sendEvent()
+                    }) {
+                        Text(text = "Send Event!")
+                    }
+                    Button(onClick = {
+                        promotionAdapter.showPromotion()
+                    }) {
+                        Text(text = "Show Promotion!")
+                    }
                 }
+
             }
         }
     }
